@@ -117,7 +117,7 @@ app.delete("/deleteAllNotes", express.json(), async (req, res) => {
     // Find note with given ID
     const collection = db.collection(COLLECTIONS.notes);
     const data = await collection.deleteMany({});
-    res.status(200).json({ response: `No notes found to delete or deleted all.` });
+    res.status(200).json({ response: `${data.deletedCount} notes deleted.` });
 
   } catch (error) {
     res.status(500).json({ error: error.message });
