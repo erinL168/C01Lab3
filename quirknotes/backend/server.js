@@ -118,9 +118,11 @@ app.delete("/deleteAllNotes", express.json(), async (req, res) => {
     const collection = db.collection(COLLECTIONS.notes);
     const data = await collection.deleteMany({});
 
-    //do a find and prevent it
-    //anything to say that json
-    //have test case if there's still any thing left
+    if (data.deletedCount > 0) {
+      res.status(200).json({ response: `${data.deletedCount} notes deleted.` });
+    } else {
+      res.status(200).json({ response: `No notes found to delete.` });
+    }
 
     res.json({ response: `Documents all deleted.` });
   } catch (error) {
