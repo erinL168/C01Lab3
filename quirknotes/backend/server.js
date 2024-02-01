@@ -117,14 +117,8 @@ app.delete("/deleteAllNotes", express.json(), async (req, res) => {
     // Find note with given ID
     const collection = db.collection(COLLECTIONS.notes);
     const data = await collection.deleteMany({});
+    res.status(200).json({ response: `No notes found to delete or deleted all.` });
 
-    if (data.deletedCount > 0) {
-      res.status(200).json({ response: `${data.deletedCount} notes deleted.` });
-    } else {
-      res.status(200).json({ response: `No notes found to delete.` });
-    }
-
-    res.json({ response: `Documents all deleted.` });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -152,7 +146,7 @@ app.patch("/patchNote/:noteId", express.json(), async (req, res) => {
     const collection = db.collection(COLLECTIONS.notes);
     const data = await collection.updateOne({
       // username: decoded.username,
-      _id: new ObjectId(noteId),
+      _id: new ObjectId(noteId)
     }, {
       $set: {
         ...(title && {title}),
