@@ -62,7 +62,7 @@ function Dialog({open, initialNote, closeDialog, postNote: postNoteState, patchN
         setStatus("Loading...");
       
         try {
-          await fetch(`http://localhost:4000/patchNote/${note._id}`, {
+          await fetch(`http://localhost:4000/patchNote/${initialNote._id}`, {
             method: "PATCH",
             headers: {
               "Content-Type": "application/json",
@@ -74,7 +74,7 @@ function Dialog({open, initialNote, closeDialog, postNote: postNoteState, patchN
               console.log("Server failed:", response.status);
             } else {
               await response.json().then((data) => {
-                patchNoteState(note._id, note.title, note.content);
+                patchNoteState(initialNote._id, note.title, note.content);
                 // setStatus("Note patched!"); // Can be replaced with close(), if you want!
                 close();
               });
